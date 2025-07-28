@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const glitchLogo = document.querySelector('.glitch-logo');
   if (!glitchLogo) return;
   const umx = 'UMX';
-  const full = 'Umer Mughal';
+  const full = 'UMER MUGHAL'; // Only show 'Umer' instead of 'Umer Mughal'
   let cycleIndex = 0; // 0, 1 = UMX, 2 = Umer Mughal
 
   function glitchBurst() {
@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setTimeout(() => {
       showUMX();
       if (typeof next === 'function') next();
-    }, 220 + Math.random() * 60);
+    }, 500 + Math.random() * 120); // show for at least 0.5s
   }
 
   function glitchLoop() {
@@ -55,54 +55,25 @@ document.addEventListener('DOMContentLoaded', function () {
   glitchLogo.addEventListener('mouseenter', glitchBurst);
 });
 
-document.querySelectorAll('.skill-box').forEach(box => {
-  box.addEventListener('mousemove', function(e) {
-    const rect = box.getBoundingClientRect();
+// 3D tilt effect for skill cards
+function addTiltEffect(card) {
+  card.addEventListener('mousemove', function(e) {
+    const rect = card.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
     const rotateX = ((y - centerY) / centerY) * 25; // max 25deg
     const rotateY = ((x - centerX) / centerX) * 25;
-    box.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg) scale(1.09)`;
+    card.style.transition = 'none';
+    card.style.transform = `rotateX(${-rotateX}deg) rotateY(${rotateY}deg)`;
   });
-  box.addEventListener('mouseleave', function() {
-    box.style.transform = 'rotateX(0deg) rotateY(0deg) scale(1)';
-  });
-});
-
-const cards = document.querySelectorAll('.skill-card');
-let current = 0;
-
-function showCard(index) {
-  cards.forEach((card, i) => {
-    card.classList.remove('active', 'stacked');
-    if (i < index) {
-      card.classList.add('stacked');
-    } else if (i === index) {
-      card.classList.add('active');
-    }
+  card.addEventListener('mouseleave', function() {
+    card.style.transition = '';
+    card.style.transform = '';
   });
 }
 
-// Initial state
-showCard(0);
-
-window.addEventListener('wheel', (e) => {
-  const skillsSection = document.querySelector('.skills-section');
-  if (
-    skillsSection &&
-    skillsSection.getBoundingClientRect().top < window.innerHeight &&
-    skillsSection.getBoundingClientRect().bottom > 0
-  ) {
-    if (e.deltaY > 0 && current < cards.length - 1) {
-      current++;
-      showCard(current);
-      e.preventDefault();
-    } else if (e.deltaY < 0 && current > 0) {
-      current--;
-      showCard(current);
-      e.preventDefault();
-    }
-  }
-}, { passive: false });
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.skill-card').forEach(addTiltEffect);
+});

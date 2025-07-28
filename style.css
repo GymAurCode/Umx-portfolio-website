@@ -58,6 +58,21 @@ header h1{
     font-weight: 300;
 }
 
+header h1.glitch-logo {
+  width: 12.5ch; /* enough for 'Umer Mughal' */
+  min-width: 12.5ch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+nav {
+  flex-shrink: 0;
+}
+
 nav{
     display: flex;
     align-items: center;
@@ -351,8 +366,8 @@ transition: background-color 0.2s ease;
   color: #b3b3bb;
   font-size: 2.7rem;
   font-weight: 900;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
+  letter-spacing: normal;
+  /* text-transform: uppercase; */
   text-shadow:
     2px 0 #3a2a4d,
     -2px 0 #2d223a,
@@ -365,6 +380,14 @@ transition: background-color 0.2s ease;
   z-index: 10;
   user-select: none;
   transition: color 0.2s;
+  width: 15ch;
+  min-width: 15ch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .glitch-logo::before,
 .glitch-logo::after {
@@ -389,23 +412,21 @@ transition: background-color 0.2s ease;
   z-index: 12;
 }
 .glitch-logo.glitching {
-  color: #4b3a5a;
+  color: #fff;
   text-shadow:
-    4px 0 #2d223a,
-    -4px 0 #4b3a5a,
-    0 4px #1a1a1a,
-    0 -4px #3a2a4d,
-    0 0 16px #2d223a88,
-    0 0 32px #3a2a4d88;
-  animation: glitch-burst 0.15s steps(2, end) infinite;
+    8px 0 #00eaff,
+    -8px 0 #ff0055,
+    0 8px #39ff14,
+    0 0 24px #00eaff88;
+  animation: glitch-burst 0.09s steps(2, end) infinite;
 }
 .glitch-logo.glitching::before {
-  text-shadow: 4px 0 #4b3a5a, 0 4px #2d223a;
-  animation: glitch-anim-1-burst 0.13s steps(2, end) infinite;
+  text-shadow: 8px 0 #00eaff, 0 8px #ff0055;
+  animation: glitch-anim-1-burst 0.07s steps(2, end) infinite;
 }
 .glitch-logo.glitching::after {
-  text-shadow: -4px 0 #2d223a, 0 -4px #4b3a5a;
-  animation: glitch-anim-2-burst 0.11s steps(2, end) infinite;
+  text-shadow: -8px 0 #39ff14, 0 -8px #ff0055;
+  animation: glitch-anim-2-burst 0.06s steps(2, end) infinite;
 }
 @keyframes glitch-skew {
   0% { transform: skew(0deg, 0deg); }
@@ -453,7 +474,7 @@ transition: background-color 0.2s ease;
 .skills-section {
   width: 100%;
   margin: 3rem auto 2rem auto;
-  padding: 2rem 0;
+  padding: 4rem 0 3rem 0; /* increased vertical padding for more height */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -467,117 +488,78 @@ transition: background-color 0.2s ease;
   letter-spacing: 0.1em;
 }
 
-.skills-grid {
+.skills-sticky-scroll {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 2rem;
+  justify-content: flex-start;
   align-items: center;
-  gap: 2.5rem;
+  max-width: 100vw;
+  overflow-x: auto;
+  padding-bottom: 16px;
+  scrollbar-width: none; /* Firefox */
+}
+.skills-sticky-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
-.skill-box {
-    width: 90%;
-    max-width: 500px;
-    height: 90px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    margin: 0 auto 1.2rem auto;
-    transition: transform 0.18s, box-shadow 0.18s;
-    will-change: transform;
-    perspective: 600px;
-    background: rgba(255, 255, 255, 0.13);
-    border: 1.5px solid rgba(255,255,255,0.25);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: 18px;
-}
-
-.skill-box img {
-    height: 60px;
-    width: 60px;
-    margin-bottom: 0;
-    margin-right: 2rem;
-}
-
-.skill-box span {
-    color: #e7e7e7;
-    font-size: 1.25rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-align: center;
-    flex: 1;
-    text-align: left;
-    width: 500px;
-}
-
-.skill-box:hover {
-}
-
-.card-stack {
-  position: relative;
-  height: 180px;
-  width: 320px;
-  margin: 0 auto 40px auto;
-  perspective: 1000px;
-}
 .skill-card {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  width: 100%;
-  height: 120px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-  opacity: 0;
-  transform: translateY(40px) scale(0.95) rotateZ(0deg);
-  transition: all 0.5s cubic-bezier(.77,0,.18,1);
-  z-index: 1;
-  pointer-events: none;
+  width: 200px;
+  height: 200px;
+  background: rgba(255,255,255,0.13);
+  border: 1.5px solid rgba(255,255,255,0.25);
+  box-shadow: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 18px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: box-shadow 0.18s;
+  will-change: transform;
+  perspective: 600px;
+  cursor: pointer;
+  user-select: none;
+  margin-top: 10px;
 }
+
 .skill-card img {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
 }
+
 .skill-card span {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #222;
-}
-.skill-card.active {
-  opacity: 1;
-  transform: translateY(0) scale(1) rotateZ(-5deg);
-  z-index: 3;
-  pointer-events: auto;
-}
-.skill-card.stacked {
-  opacity: 1;
-  transform: translateY(20px) scale(0.98) rotateZ(5deg);
-  z-index: 2;
+  color: #fff;
+  margin-top: 12px;
+  display: block;
+  text-align: center;
+  text-shadow:
+    0 2px 8px #000a,   /* soft shadow below */
+    0 1px 0 #333,      /* hard shadow for 3D depth */
+    0 0 6px #00eaff88; /* subtle blue glow */
 }
 
-@media (max-width: 900px) {
-  .skills-grid {
-    gap: 1.5rem;
+.skill-card:hover {
+  box-shadow: 0 6px 24px 0 rgba(60,60,60,0.10), 0 1.5px 8px 0 rgba(80,80,80,0.10);
+}
+
+@media (max-width: 1000px) {
+  .skill-card {
+    width: 140px;
+    height: 140px;
+    font-size: 0.95rem;
+    padding: 1.2rem 0.7rem;
   }
-  .skill-box {
-    width: 98%;
-    max-width: 98vw;
-    height: 70px;
-  }
-  .skills-section {
-    padding: 1.2rem 0.2rem;
-  }
-  .skill-box img {
-    height: 40px;
-    width: 40px;
-    margin-right: 1rem;
+  .skill-card img {
+    width: 36px;
+    height: 36px;
   }
 }
 
@@ -586,21 +568,18 @@ transition: background-color 0.2s ease;
     font-size: 1.3rem;
     margin-bottom: 1rem;
   }
-  .skills-grid {
-    gap: 0.7rem;
+  .skills-sticky-scroll {
+    gap: 0.5rem;
   }
-  .skill-box {
-    width: 99vw;
-    max-width: 99vw;
-    height: 54px;
+  .skill-card {
+    width: 120px;
+    height: 120px;
+    font-size: 0.8rem;
+    padding: 0.7rem 0.3rem;
   }
-  .skill-box img {
-    height: 28px;
-    width: 28px;
-  }
-  .skills-section {
-    margin: 1.2rem auto 1rem auto;
-    padding: 0.7rem 0.1rem;
+  .skill-card img {
+    width: 24px;
+    height: 24px;
   }
 }
 
